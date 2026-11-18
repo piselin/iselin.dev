@@ -43,9 +43,9 @@ Use a unique lowercase slug containing only letters, numbers, and hyphens. This 
 
 ## GitHub Pages and Hostpoint
 
-The public source is in [github.com/piselin/iselin.dev](https://github.com/piselin/iselin.dev). GitHub Pages is enabled from the `main` branch root. Its custom domain is prepared as `iselin.dev` and recorded in the root `CNAME` file. The site supports both the apex root and the GitHub project Pages path.
+The public source is in [github.com/piselin/iselin.dev](https://github.com/piselin/iselin.dev). GitHub Pages is enabled from the `main` branch root, the custom domain is set to `iselin.dev`, and the root `CNAME` file records it. GitHub reports the domain as verified. HTTPS enforcement is currently off because GitHub has not issued the certificate yet. The site supports both the apex root and the GitHub project Pages path.
 
-The apex domain will not serve this repository until its DNS points to GitHub Pages. No Hostpoint DNS or redirect settings were changed. Before editing DNS, follow GitHub's [domain verification guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages) in your GitHub profile settings and add the TXT record GitHub gives you; keep that TXT record after verification.
+The apex domain is **not confirmed live yet**: its DNS has not been changed. No Hostpoint DNS or redirect settings were changed. GitHub already reports `iselin.dev` as verified for this account, so no additional verification TXT record should be needed; keep any existing GitHub verification TXT record in place.
 
 GitHub's [current apex-domain guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain) lists these Hostpoint DNS targets for `iselin.dev`:
 
@@ -63,7 +63,7 @@ GitHub's [current apex-domain guide](https://docs.github.com/pages/configuring-a
 
 GitHub requires at least one apex `A`, `ALIAS`, or `ANAME` record; its guide recommends these four `A` addresses. The four `AAAA` records add IPv6 support, and GitHub recommends keeping the `A` records alongside them. If Hostpoint offers `ALIAS`/`ANAME`, that can be used instead of the apex `A` records as documented by GitHub. Set `www` to a CNAME of `piselin.github.io` (without a repository path); once both hostnames resolve correctly, GitHub Pages redirects between `www` and the apex configured for this site.
 
-At Hostpoint, remove only records that conflict with these GitHub Pages targets (for example, old apex `A`/`AAAA` values or conflicting `www` address records). Preserve all MX records and existing email-related or unrelated TXT records; add GitHub's domain-verification TXT without replacing them. Do not use wildcard DNS. DNS propagation can take up to 24 hours. Once DNS resolves to GitHub Pages and the HTTPS certificate is ready, check **Enforce HTTPS** in the repository's Pages settings if it is not already enabled. For the eventual apex URL, set the Supabase Auth production/redirect URL to `https://iselin.dev/`.
+At Hostpoint, add the listed records if they are not already present. Remove only records that conflict with the GitHub Pages targets (for example, old apex `A`/`AAAA` values or conflicting `www` address records). Preserve all MX records and existing email-related or unrelated TXT records. Do not use wildcard DNS. DNS propagation can take up to 24 hours. Once DNS resolves to GitHub Pages and the HTTPS certificate is ready, enable **Enforce HTTPS** in the repository's Pages settings. For the eventual apex URL, set the Supabase Auth production/redirect URL to `https://iselin.dev/`.
 
 GitHub Pages serves the files publicly, including HTML, JavaScript, the empty/public blog content, and the Supabase URL/public key. It never contains private notes, file contents, or a service-role key. Private content is fetched directly from Supabase only after sign-in; database RLS and the private Storage policies enforce owner-only access. The private HTML files themselves are public static shells and are not an access boundary.
 
