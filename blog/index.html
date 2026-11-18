@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co; style-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'self'; object-src 'none'">
+  <title>Blog · iselin.dev</title>
+  <link rel="stylesheet" href="/public/styles.css">
+  <script type="module" src="/assets/blog.js"></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/">iselin.dev</a><nav class="nav" aria-label="Main navigation"><a href="/blog/">Blog</a><a class="sign-in" href="/login/">Owner sign in</a></nav></header>
+  <main>
+    <section class="narrow">
+      <p class="eyebrow">Writing</p><h1 class="page-title">The blog</h1>
+      <p class="lead">Notes and ideas, published here when they're ready.</p>
+      <p id="blog-message" class="message danger" role="status" hidden></p>
+      <div id="post-list" class="post-list"></div>
+      <div id="empty-state" class="panel empty-state"><strong>No posts yet</strong>This blog is ready for your first post. Add it to <code>content/posts.json</code>.</div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>iselin.dev · A personal site. Add your own introduction and writing when you're ready.</p></footer>
+</body>
+</html>

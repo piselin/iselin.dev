@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co; style-src 'self'; img-src 'self' data: blob:; form-action 'self'; base-uri 'self'; object-src 'none'">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Private area · iselin.dev</title>
+  <link rel="stylesheet" href="/public/styles.css">
+  <script src="/supabase/config.js"></script>
+  <script type="module" src="/assets/private.js"></script>
+</head>
+<body data-page="dashboard">
+  <header class="site-header"><a class="brand" href="/">iselin.dev</a><nav class="nav" aria-label="Main navigation"><a href="/blog/">Blog</a><a href="/private/">Private area</a><a href="/private/notes/">Notes</a><a href="/private/files/">Files</a><button id="sign-out" type="button">Sign out</button></nav></header>
+  <main>
+    <section>
+      <p class="eyebrow">Just for you</p><h1 class="page-title">Your private space</h1>
+      <p class="lead">A private place for notes, documents, and useful tools. Nothing here is public.</p>
+      <p id="message" class="message" role="status" aria-live="polite" hidden></p>
+      <div id="private-content" class="grid" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>iselin.dev · A personal site. Add your own introduction and writing when you're ready.</p></footer>
+</body>
+</html>

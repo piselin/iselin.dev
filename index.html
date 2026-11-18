@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co; style-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'self'; object-src 'none'">
+  <title>iselin.dev</title>
+  <link rel="stylesheet" href="/public/styles.css">
+  <script type="module" src="/assets/home.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">iselin.dev</a>
+    <nav class="nav" aria-label="Main navigation"><a href="/blog/">Blog</a><a class="sign-in" href="/login/">Owner sign in</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">A small corner of the internet</p>
+      <h1>Welcome to iselin.dev</h1>
+      <p class="lead">A personal site for ideas in progress. This introduction is a placeholder for your own words.</p>
+      <div class="actions"><a class="button" href="/blog/">Visit the blog</a><a class="button secondary" href="/login/">Owner sign in</a></div>
+    </section>
+    <section>
+      <div class="section-heading"><h2>Latest writing</h2><a href="/blog/">All posts</a></div>
+      <div id="latest-posts" class="post-list"></div>
+      <div id="empty-state" class="panel empty-state"><strong>No posts yet</strong>When you add an article to the blog content file, it will appear here.</div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>iselin.dev · A personal site. Add your own introduction and writing when you're ready.</p></footer>
+</body>
+</html>
