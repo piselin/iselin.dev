@@ -41,14 +41,11 @@ Add entries to `content/posts.json` in this shape:
 
 Use a unique lowercase slug containing only letters, numbers, and hyphens. This file is public when the site is published; never put private notes, documents, credentials, or personal data here. Post bodies are rendered as text, not HTML.
 
-## Publish with GitHub Pages and Hostpoint
+## GitHub Pages and Hostpoint
 
-Nothing has been pushed, deployed, or changed at Hostpoint. To publish later:
+The public source is in [github.com/piselin/iselin.dev](https://github.com/piselin/iselin.dev). GitHub Pages is enabled from the `main` branch root, and HTTPS enforcement is on. The published URL is [https://www.iselin.dev/iselin.dev/](https://www.iselin.dev/iselin.dev/); [https://piselin.github.io/iselin.dev/](https://piselin.github.io/iselin.dev/) redirects there. The site uses relative paths so its assets and navigation work at this project subpath.
 
-1. Create a GitHub repository for this folder and push it yourself. In repository Settings > Pages, choose deployment from the `main` branch and the root folder. This is a plain static site; there is no Node server or build action.
-2. Add the custom domain `iselin.dev` in GitHub Pages settings and follow GitHub's current DNS verification guidance. Keep the domain registration at Hostpoint.
-3. At Hostpoint, configure the records GitHub currently documents for Pages: for the apex (`iselin.dev`), GitHub normally uses its four A and four AAAA records; for `www`, use a CNAME to `<your-github-username>.github.io`. Confirm the exact current targets in [GitHub's custom-domain guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site) before saving—provider values and interfaces can change. Keep existing MX/TXT and unrelated DNS records, and verify the domain in GitHub Pages before removing or replacing any records. Enable HTTPS in GitHub Pages after DNS verification.
-4. In Supabase Authentication URL settings, set the production site URL to `https://iselin.dev` and add the GitHub Pages preview URL to allowed redirect URLs if you want to test sign-in there. Keep the URL settings aligned with the actual domain.
+No Hostpoint DNS or redirect settings were changed. If you want the site at the domain root (`https://iselin.dev/`) instead of the current project path, first confirm the existing Hostpoint records and GitHub Pages domain configuration. Follow [GitHub's current custom-domain guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site); provider settings and DNS values can change. Do not remove existing MX/TXT or unrelated records. For the current published URL, configure the Supabase Auth production/redirect URL as `https://www.iselin.dev/iselin.dev/`; update it if you later change the public URL.
 
 GitHub Pages serves the files publicly, including HTML, JavaScript, the empty/public blog content, and the Supabase URL/public key. It never contains private notes, file contents, or a service-role key. Private content is fetched directly from Supabase only after sign-in; database RLS and the private Storage policies enforce owner-only access. The private HTML files themselves are public static shells and are not an access boundary.
 
