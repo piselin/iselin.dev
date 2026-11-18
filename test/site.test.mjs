@@ -28,6 +28,43 @@ test('static public and private routes exist without private content', async () 
   }
 });
 
+test('local asset and navigation URLs work under the GitHub Pages project path', async () => {
+  const pages = [
+    'index.html',
+    'blog/index.html',
+    'login/index.html',
+    'private/index.html',
+    'private/notes/index.html',
+    'private/files/index.html',
+  ];
+  for (const file of pages) {
+    const html = await read(file);
+    const pageDirectory = path.posix.dirname(file);
+    const basePath = pageDirectory === '.' ? '/iselin.dev/' : `/iselin.dev/${pageDirectory}/`;
+    const references = [...html.matchAll(/(?:href|src)="([^"]+)"/g)].map((match) => match[1]);
+    for (const reference of references) {
+      if (/^(?:https?:|data:|#)/i.test(reference)) continue;
+      assert.ok(!reference.startsWith('/'), `${file} should use a project-relative URL: ${reference}`);
+      const resolved = new URL(reference, `https://pages.example${basePath}`);
+      assert.ok(resolved.pathname.startsWith('/iselin.dev/'), `${reference} escaped the Pages project path`);
+    }
+  }
+
+  const [home, blog, auth, privateClient] = await Promise.all([
+    read('assets/home.js'),
+    read('assets/blog.js'),
+    read('assets/auth.js'),
+    read('assets/private.js'),
+  ]);
+  assert.match(home, /fetch\('content\/posts\.json'/);
+  assert.match(home, /`blog\/\?post=/);
+  assert.match(blog, /fetch\('\.\.\/content\/posts\.json'/);
+  assert.match(blog, /`\?post=/);
+  assert.match(auth, /assign\('\.\.\/private\/'/);
+  assert.match(privateClient, /replace\('\.\.\/login\/'/);
+  assert.doesNotMatch([home, blog, auth, privateClient].join('\n'), /(?:assign|replace)\('\/|fetch\('\/|href = `\//);
+});
+
 test('browser code uses login-only Auth and does not expose a service-role key', async () => {
   const [auth, privateClient, supabaseClient, config] = await Promise.all([
     read('assets/auth.js'),

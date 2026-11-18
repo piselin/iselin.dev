@@ -20,6 +20,6 @@ if (form) {
       button.disabled = false;
       return;
     }
-    window.location.assign('/private/');
+    window.location.assign('../private/');
   });
 }

@@ -12,7 +12,7 @@ function element(tag, text, className) {
 }
 
 try {
-  const response = await fetch('/content/posts.json', { cache: 'no-store' });
+  const response = await fetch('../content/posts.json', { cache: 'no-store' });
   if (!response.ok) throw new Error('Could not load posts.');
   const posts = await response.json();
 
@@ -33,7 +33,7 @@ try {
       card.append(element('p', post.date || '', 'date'));
       const heading = element('h2');
       const link = element('a', post.title || 'Untitled');
-      link.href = `/blog/?post=${encodeURIComponent(post.slug)}`;
+      link.href = `?post=${encodeURIComponent(post.slug)}`;
       heading.append(link);
       card.append(heading, element('p', post.summary || '', 'quiet'));
       return card;

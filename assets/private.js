@@ -31,8 +31,8 @@ async function loadDashboard() {
   if (notesError || filesError) throw notesError || filesError;
   const grid = node('div', undefined, 'grid');
   for (const [title, count, href, label] of [
-    ['Journal & notes', notesCount, '/private/notes/', 'Open notes →'],
-    ['Documents', filesCount, '/private/files/', 'Open files →'],
+    ['Journal & notes', notesCount, 'notes/', 'Open notes →'],
+    ['Documents', filesCount, 'files/', 'Open files →'],
   ]) {
     const card = node('article', undefined, 'card');
     card.append(node('p', title, 'eyebrow'), node('div', String(count || 0), 'stat'));
@@ -208,7 +208,7 @@ if (signOut && supabase) {
       signOut.disabled = false;
       return;
     }
-    window.location.assign('/');
+    window.location.assign('../');
   });
 } else if (signOut) {
   signOut.hidden = true;
@@ -219,7 +219,7 @@ if (content) {
   if (error) {
     showMessage(message, error.message, true);
     if (error.message === 'Please sign in to continue.') {
-      window.location.replace('/login/');
+      window.location.replace('../login/');
     } else {
       content.hidden = true;
     }
