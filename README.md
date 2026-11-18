@@ -43,9 +43,27 @@ Use a unique lowercase slug containing only letters, numbers, and hyphens. This 
 
 ## GitHub Pages and Hostpoint
 
-The public source is in [github.com/piselin/iselin.dev](https://github.com/piselin/iselin.dev). GitHub Pages is enabled from the `main` branch root, and HTTPS enforcement is on. The published URL is [https://www.iselin.dev/iselin.dev/](https://www.iselin.dev/iselin.dev/); [https://piselin.github.io/iselin.dev/](https://piselin.github.io/iselin.dev/) redirects there. The site uses relative paths so its assets and navigation work at this project subpath.
+The public source is in [github.com/piselin/iselin.dev](https://github.com/piselin/iselin.dev). GitHub Pages is enabled from the `main` branch root. Its custom domain is prepared as `iselin.dev` and recorded in the root `CNAME` file. The site supports both the apex root and the GitHub project Pages path.
 
-No Hostpoint DNS or redirect settings were changed. If you want the site at the domain root (`https://iselin.dev/`) instead of the current project path, first confirm the existing Hostpoint records and GitHub Pages domain configuration. Follow [GitHub's current custom-domain guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site); provider settings and DNS values can change. Do not remove existing MX/TXT or unrelated records. For the current published URL, configure the Supabase Auth production/redirect URL as `https://www.iselin.dev/iselin.dev/`; update it if you later change the public URL.
+The apex domain will not serve this repository until its DNS points to GitHub Pages. No Hostpoint DNS or redirect settings were changed. Before editing DNS, follow GitHub's [domain verification guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages) in your GitHub profile settings and add the TXT record GitHub gives you; keep that TXT record after verification.
+
+GitHub's [current apex-domain guide](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain) lists these Hostpoint DNS targets for `iselin.dev`:
+
+| Type | Host/name | Value |
+| --- | --- | --- |
+| A | `@` (apex) | `185.199.108.153` |
+| A | `@` (apex) | `185.199.109.153` |
+| A | `@` (apex) | `185.199.110.153` |
+| A | `@` (apex) | `185.199.111.153` |
+| AAAA | `@` (apex) | `2606:50c0:8000::153` |
+| AAAA | `@` (apex) | `2606:50c0:8001::153` |
+| AAAA | `@` (apex) | `2606:50c0:8002::153` |
+| AAAA | `@` (apex) | `2606:50c0:8003::153` |
+| CNAME | `www` | `piselin.github.io` |
+
+GitHub requires at least one apex `A`, `ALIAS`, or `ANAME` record; its guide recommends these four `A` addresses. The four `AAAA` records add IPv6 support, and GitHub recommends keeping the `A` records alongside them. If Hostpoint offers `ALIAS`/`ANAME`, that can be used instead of the apex `A` records as documented by GitHub. Set `www` to a CNAME of `piselin.github.io` (without a repository path); once both hostnames resolve correctly, GitHub Pages redirects between `www` and the apex configured for this site.
+
+At Hostpoint, remove only records that conflict with these GitHub Pages targets (for example, old apex `A`/`AAAA` values or conflicting `www` address records). Preserve all MX records and existing email-related or unrelated TXT records; add GitHub's domain-verification TXT without replacing them. Do not use wildcard DNS. DNS propagation can take up to 24 hours. Once DNS resolves to GitHub Pages and the HTTPS certificate is ready, check **Enforce HTTPS** in the repository's Pages settings if it is not already enabled. For the eventual apex URL, set the Supabase Auth production/redirect URL to `https://iselin.dev/`.
 
 GitHub Pages serves the files publicly, including HTML, JavaScript, the empty/public blog content, and the Supabase URL/public key. It never contains private notes, file contents, or a service-role key. Private content is fetched directly from Supabase only after sign-in; database RLS and the private Storage policies enforce owner-only access. The private HTML files themselves are public static shells and are not an access boundary.
 

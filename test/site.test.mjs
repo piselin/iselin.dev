@@ -28,7 +28,7 @@ test('static public and private routes exist without private content', async () 
   }
 });
 
-test('local asset and navigation URLs work under the GitHub Pages project path', async () => {
+test('local asset and navigation URLs work at the apex and project Pages path', async () => {
   const pages = [
     'index.html',
     'blog/index.html',
@@ -40,16 +40,19 @@ test('local asset and navigation URLs work under the GitHub Pages project path',
   for (const file of pages) {
     const html = await read(file);
     const pageDirectory = path.posix.dirname(file);
-    const basePath = pageDirectory === '.' ? '/iselin.dev/' : `/iselin.dev/${pageDirectory}/`;
+    const pagePath = pageDirectory === '.' ? '' : `${pageDirectory}/`;
     const references = [...html.matchAll(/(?:href|src)="([^"]+)"/g)].map((match) => match[1]);
-    for (const reference of references) {
-      if (/^(?:https?:|data:|#)/i.test(reference)) continue;
-      assert.ok(!reference.startsWith('/'), `${file} should use a project-relative URL: ${reference}`);
-      const resolved = new URL(reference, `https://pages.example${basePath}`);
-      assert.ok(resolved.pathname.startsWith('/iselin.dev/'), `${reference} escaped the Pages project path`);
+    for (const basePath of ['/', '/iselin.dev/']) {
+      for (const reference of references) {
+        if (/^(?:https?:|data:|#)/i.test(reference)) continue;
+        assert.ok(!reference.startsWith('/'), `${file} should use a relative URL: ${reference}`);
+        const resolved = new URL(reference, `https://pages.example${basePath}${pagePath}`);
+        assert.ok(resolved.pathname.startsWith(basePath), `${reference} escaped the site base ${basePath}`);
+      }
     }
   }
 
+  assert.equal((await read('CNAME')).trim(), 'iselin.dev');
   const [home, blog, auth, privateClient] = await Promise.all([
     read('assets/home.js'),
     read('assets/blog.js'),
